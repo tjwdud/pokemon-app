@@ -1,0 +1,15 @@
+{
+  "pokemons": [
+    {
+      "id": 322,
+      "name": "numel",
+      "image": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/322.png",
+      "hp": 60,
+      "attack": 60,
+      "defense": 40,
+      "special-attack": 65,
+      "special-defense": 45,
+      "speed": 35
+    }
+  ]
+}
