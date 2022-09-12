@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import useLocalStorage from 'use-local-storage';
 import { useObserver } from '../hooks/useObserver';
 import PokemonCard from '../components/PokemonCard';
@@ -17,7 +17,7 @@ const PokemonList = () => {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery('pokemonList', fetchPokemons, {
+  } = useInfiniteQuery(['pokemonList'], fetchPokemons, {
     getNextPageParam: (lastPage) => {
       const { next } = lastPage;
       if (!next) return false;
