@@ -1,17 +1,22 @@
 import axios from 'axios';
 import { fetchPokemonDetails } from '../../services/api';
-const Pokemon = ({ data }) => {
-  const { name, types, id, base_experience, abilities, order, stats } = data;
+import { Hydrate, QueryClient, dehydrate } from '@tanstack/react-query';
+import { usePokemonDetails } from '../../hooks/usePokemonDetails';
+import { useRouter } from 'next/router';
+const Pokemon = ({ params }) => {
+  const router = useRouter();
+  const { pokeId } = router.query;
+  console.log(pokeId);
+  const { data, isLoading, isFetching } = usePokemonDetails(Number(pokeId));
+  const { name, types, id, base_experience, abilities, order, stats, sprites } =
+    data;
 
-  // stats.forEach((stat) => console.log(stat.base_stat, stat.stat.name));
-
+  if (isLoading) return <div className="w-[400px] bg-black">Loading</div>;
+  console.log(isLoading, isFetching);
   return (
     <div>
       <div>
-        <img
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-          alt={name}
-        />
+        <img src={sprites.other['official-artwork'].front_default} alt={name} />
         <h1>{name}</h1>
       </div>
 
@@ -31,9 +36,13 @@ const Pokemon = ({ data }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  const data = await fetchPokemonDetails(params.pokeId);
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(
+    ['pokemonDetails', Number(params.pokeId)],
+    () => fetchPokemonDetails(params.pokeId)
+  );
 
-  return { props: { data } };
+  return { props: { dehydratedState: dehydrate(queryClient) } };
 };
 
 export default Pokemon;
