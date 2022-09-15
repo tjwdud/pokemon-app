@@ -1,5 +1,5 @@
 import { usePokemonDetails } from '../../../hooks/usePokemonDetails';
-import { makePokemonInfo } from '../../../utils/getPokemonStat';
+import { makePokemonInfo } from '../../../utils/makePokemonInfo';
 import { useAddMyPokemon } from '../../../hooks/useAddMyPokemon';
 import PokemonDetailCard from '../../../components/PokemonDetailCard';
 const DetailPokemonCard = ({
@@ -25,9 +25,13 @@ const DetailPokemonCard = ({
   return (
     <div
       onClick={() => handlePokemonPick()}
-      className="w-[300px] h-[300px] bg-gray-100 mt-20 ml-10 mr-10 flex justify-center cursor-pointer"
+      className="w-[300px] min-h-[300px] bg-gray-100 mt-20 ml-10 mr-10 pb-10 flex justify-center cursor-pointer"
     >
-      <PokemonDetailCard pokemonInfo={pokemonInfo} />
+      <PokemonDetailCard
+        layoutDirection={'col'}
+        pokemonInfo={pokemonInfo}
+        isBig={'false'}
+      />
     </div>
   );
 };
