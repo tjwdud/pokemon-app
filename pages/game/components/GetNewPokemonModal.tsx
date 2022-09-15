@@ -9,12 +9,12 @@ const GetNewPokemonModal = ({
 }: {
   setIsModalOpen: (value: boolean) => void;
 }) => {
-  const [ids, setIds] = useState([]);
+  const [ids, setIds] = useState<number[]>([]);
   useEffect(() => {
     const newIds = getRandomIds(RANDOM_CARD_NUMBER);
     setIds(newIds);
   }, []);
-  console.log(ids);
+
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 h-full z-40 bg-blackRgba">
       <div className="rounded bg-white opacity-100 flex flex-col absolute justify-center w-[1200px] min-h-[900px] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50">
