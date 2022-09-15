@@ -3,34 +3,24 @@ import { fetchPokemonDetails } from '../../services/api';
 import { Hydrate, QueryClient, dehydrate } from '@tanstack/react-query';
 import { usePokemonDetails } from '../../hooks/usePokemonDetails';
 import { useRouter } from 'next/router';
+import { makePokemonInfo } from '../../utils/makePokemonInfo';
+import PokemonDetailCard from '../../components/PokemonDetailCard';
 const Pokemon = ({ params }) => {
   const router = useRouter();
   const { pokeId } = router.query;
-  console.log(pokeId);
+
   const { data, isLoading, isFetching } = usePokemonDetails(Number(pokeId));
-  const { name, types, id, base_experience, abilities, order, stats, sprites } =
-    data;
-
+  const { name, id, stats, sprites } = data;
+  const pokemonInfo = makePokemonInfo(id, name, stats, sprites);
   if (isLoading) return <div className="w-[400px] bg-black">Loading</div>;
-  console.log(isLoading, isFetching);
+
   return (
-    <div>
-      <div>
-        <img src={sprites.other['official-artwork'].front_default} alt={name} />
-        <h1>{name}</h1>
-      </div>
-
-      <div>
-        <div>
-          <p>ID</p>
-          <p>{id}</p>
-        </div>
-
-        <div>
-          <p>기본 경험치</p>
-          <p>{base_experience} exp</p>
-        </div>
-      </div>
+    <div className="flex justify-center w-[60%] m-auto bg-sky-100 pb-10">
+      <PokemonDetailCard
+        pokemonInfo={pokemonInfo}
+        layoutDirection={'col'}
+        isBig={'true'}
+      />
     </div>
   );
 };
