@@ -11,12 +11,25 @@ module.exports = {
         blackRgba: 'rgba(196, 196, 196, 0.5)',
       },
       backgroundImage: {
-        bgImg: "url('/assets/img/game-background.png')",
+        bgImg: "url('/assets/img/gameBackground.png')",
+      },
+      keyframes: {
+        vibration: {
+          from: {
+            transform: 'rotate(1deg)',
+          },
+          to: {
+            transform: 'rotate(-1deg)',
+          },
+        },
+      },
+      animation: {
+        vibration: 'vibration .1s 10',
       },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [percentageWidth],
+  plugins: [percentageWidth, require('tailwind-scrollbar-hide')],
 };
